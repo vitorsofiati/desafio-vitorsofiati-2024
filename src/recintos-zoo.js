@@ -20,17 +20,18 @@ class RecintosZoo {
 
     analisaRecintos(animal, quantidade) {
         const especie = this.animais[animal.toUpperCase()];
+        // Verificações de input
         if (!especie) return { erro: "Animal inválido" };
         if (quantidade <= 0) return { erro: "Quantidade inválida" };
     
         console.log(`Analisando recintos para ${animal} (quantidade: ${quantidade})`);
     
         let recintosViaveis = this.recintos.filter(recinto => {
-// Verificar compatibilidade de bioma (usando sempre some, independente da quantidade de biomas)
-const biomaCompativel = especie.biomas.some(bioma => recinto.bioma.includes(bioma));
+// Verificar compatibilidade de bioma
+            const biomaCompativel = especie.biomas.some(bioma => recinto.bioma.includes(bioma));
 
-console.log(`Recinto ${recinto.numero}: Bioma compatível?`, biomaCompativel);
-if (!biomaCompativel) return false;
+            console.log(`Recinto ${recinto.numero}: Bioma compatível?`, biomaCompativel);
+            if (!biomaCompativel) return false;
 
     
             // Verificar presença de carnívoros e não-carnívoros no recinto
@@ -60,6 +61,13 @@ if (!biomaCompativel) return false;
             if (!especieCarnivora && recintoTemCarnivoros) {
                 console.log(`Recinto ${recinto.numero}: Não é possível misturar carnívoros com ${animal}`);
                 return false;
+            }
+
+            if (animal.toUpperCase() === 'HIPOPOTAMO' && recinto.animaisExistentes.length > 0) {
+                if (recinto.bioma !== 'savana e rio') {
+                    console.log(`Recinto ${recinto.numero}: Hipopótamo só aceita convívio com outros animais em bioma savana e rio.`);
+                    return false;
+                }
             }
     
             const espacoOcupado = recinto.animaisExistentes.reduce((acc, bicho) => acc + (bicho.tamanho * bicho.quantidade), 0);

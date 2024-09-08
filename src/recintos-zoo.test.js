@@ -36,11 +36,22 @@ describe('Recintos do Zoologico', () => {
         expect(resultado.recintosViaveis[2]).toBe('Recinto 3 (espaço livre: 2 total: 7)');
         expect(resultado.recintosViaveis.length).toBe(3);
     });
+    
+    // NOVOS TESTES
 
     test('Deve rejeitar convívio entre carnívoros e não-carnívoros, ou carnívoros de espécies diferentes', () => {
         const resultado = new RecintosZoo().analisaRecintos('LEOPARDO', 1);
-        expect(resultado.erro).toBe("Não há recinto viável");
+        expect(resultado.erro).toBe("Não há recinto viável"); // Todos os biomas compatíveis com o Leopardo já possuem outros animais (de espécies diferentes)
     });    
+    
+    test('Deve permitir hipopótamos conviverem com outras espécies apenas em recintos com savana e rio', () => {
+        const resultado = new RecintosZoo().analisaRecintos('HIPOPOTAMO', 1);
         
+        expect(resultado.erro).toBeFalsy(); 
+        expect(resultado.recintosViaveis[0]).toBe('Recinto 3 (espaço livre: 0 total: 7)'); // recinto 3 possui outros animais, mas seu bioma é savana e rio
+        expect(resultado.recintosViaveis[1]).toBe('Recinto 4 (espaço livre: 4 total: 8)'); // recinto 4 está vazio e o bioma é compatível
+        expect(resultado.recintosViaveis.length).toBe(2);
+    });
+    
 });
 
