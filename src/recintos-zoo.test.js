@@ -37,5 +37,10 @@ describe('Recintos do Zoologico', () => {
         expect(resultado.recintosViaveis.length).toBe(3);
     });
 
+    test('Deve rejeitar convívio entre carnívoros e não-carnívoros, ou carnívoros de espécies diferentes', () => {
+        const resultado = new RecintosZoo().analisaRecintos('LEOPARDO', 1);
+        expect(resultado.erro).toBe("Não há recinto viável");
+    });    
+        
 });
 
