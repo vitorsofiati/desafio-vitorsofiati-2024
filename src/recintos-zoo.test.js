@@ -52,6 +52,14 @@ describe('Recintos do Zoologico', () => {
         expect(resultado.recintosViaveis[1]).toBe('Recinto 4 (espaço livre: 4 total: 8)'); // recinto 4 está vazio e o bioma é compatível
         expect(resultado.recintosViaveis.length).toBe(2);
     });
-    
+
+    test('Deve rejeitar recinto vazio para 1 macaco, mas aceitar recintos com outros animais', () => {
+        const resultado = new RecintosZoo().analisaRecintos('MACACO', 1);
+
+        expect(resultado.erro).toBeFalsy();
+        expect(resultado.recintosViaveis[0]).toBe('Recinto 1 (espaço livre: 6 total: 10)');
+        expect(resultado.recintosViaveis[1]).toBe('Recinto 3 (espaço livre: 3 total: 7)'); 
+        expect(resultado.recintosViaveis.length).toBe(2);
+    });        
 });
 

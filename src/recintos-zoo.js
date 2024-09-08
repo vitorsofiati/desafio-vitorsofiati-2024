@@ -63,11 +63,18 @@ class RecintosZoo {
                 return false;
             }
 
+            // Hipopótamos só convivem com outros animais no bioma de savana e rio.
             if (animal.toUpperCase() === 'HIPOPOTAMO' && recinto.animaisExistentes.length > 0) {
                 if (recinto.bioma !== 'savana e rio') {
                     console.log(`Recinto ${recinto.numero}: Hipopótamo só aceita convívio com outros animais em bioma savana e rio.`);
                     return false;
                 }
+            }
+
+            // 1 macaco não se sente confortável sozinho.
+            if (animal.toUpperCase() === 'MACACO' && quantidade === 1 && recinto.animaisExistentes.length === 0) {
+                console.log(`Recinto ${recinto.numero}: Macaco não gosta de estar sozinho em um recinto vazio.`);
+                return false;
             }
     
             const espacoOcupado = recinto.animaisExistentes.reduce((acc, bicho) => acc + (bicho.tamanho * bicho.quantidade), 0);
